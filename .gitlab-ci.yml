@@ -11,7 +11,7 @@ stages:
 Test and Lint Application Job:
   stage: Test and Lint 
   script:
-    - echo "This is test stage for testing"
+    - echo "Success"
 #   rules:
 #     - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == "main"
   
