@@ -62,3 +62,19 @@ resource "aws_security_group" "worker_sg" {
     Name = "${var.prefix}-worker-security-group"
   }
 }
+
+# Creating a security group for the RDS database
+resource "aws_security_group" "rds_sg" {
+  name        = "${var.prefix}-security-group"
+  description = "Security group for RDS database"
+
+  vpc_id = aws_vpc.vpc.id
+
+  # Ingress rule to allow incoming traffic on port 3306 from the EKS cluster security group
+  ingress {
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [aws_security_group.sg.id]
+  }
+}
