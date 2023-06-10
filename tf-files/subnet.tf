@@ -61,3 +61,9 @@ resource "aws_subnet" "subnets" {
     Name = count.index < 2 ? "${var.prefix}-public-subnet-${count.index + 1}" : "${var.prefix}-private-subnet-${count.index + 1}"
   }
 }
+
+# Create a subnet group for the RDS database
+resource "aws_db_subnet_group" "rds_subnet_group" {
+  name       = "${var.prefix}-rds-subnet-group"
+  subnet_ids = [aws_subnet.subnets[*].id]
+}
