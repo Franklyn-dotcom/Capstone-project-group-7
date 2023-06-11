@@ -1,8 +1,0 @@
-This is a test file to check the pipeline functionality
- Still testing
-
- Testing 2
-
-
-
- 
