@@ -20,12 +20,12 @@ resource "aws_db_instance" "rds_instance" {
   storage_type           = "gp2"
   publicly_accessible    = false
   vpc_security_group_ids = [aws_security_group.rds_sg.id]
-  db_subnet_group_name   = aws_db_subnet_group.db_subnet_group.name
+  db_subnet_group_name   = aws_db_subnet_group.rds_subnet_group.name
 }
 
 # Configuring the RDS database to allow connections from the EKS cluster
 resource "aws_security_group_rule" "rds_ingress_rule" {
-  security_group_id        = aws_db_instance.rds_instance.vpc_security_group_ids[0]
+  security_group_id        = aws_security_group.rds_sg.id
   type                     = "ingress"
   from_port                = 3306
   to_port                  = 3306

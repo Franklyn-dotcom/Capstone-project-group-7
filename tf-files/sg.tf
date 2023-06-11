@@ -43,6 +43,7 @@ resource "aws_security_group" "sg" {
 resource "aws_security_group" "worker_sg" {
   name        = "${var.prefix}-worker-security-group"
   description = "Security group for worker nodes"
+  vpc_id      = aws_vpc.vpc.id
 
   ingress {
     from_port   = 0
