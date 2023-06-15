@@ -65,5 +65,5 @@ resource "aws_subnet" "subnets" {
 # Create a subnet group for the RDS database
 resource "aws_db_subnet_group" "rds_subnet_group" {
   name       = "${var.prefix}-rds-subnet-group"
-  subnet_ids = [aws_subnet.subnets[0].id]
+  subnet_ids = slice(aws_subnet.subnets[*].id, 0, 2)
 }

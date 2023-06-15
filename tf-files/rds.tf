@@ -15,6 +15,8 @@ resource "aws_db_instance" "rds_db" {
 # Creating an RDS database instance
 resource "aws_db_instance" "rds_instance" {
   engine                 = "mysql"
+  username               = "admin"
+  password               = "Group7SecurePassword098!!"
   instance_class         = "db.t3.micro"
   allocated_storage      = 20
   storage_type           = "gp2"
@@ -24,14 +26,14 @@ resource "aws_db_instance" "rds_instance" {
 }
 
 # Configuring the RDS database to allow connections from the EKS cluster
-resource "aws_security_group_rule" "rds_ingress_rule" {
-  security_group_id        = aws_security_group.rds_sg.id
-  type                     = "ingress"
-  from_port                = 3306
-  to_port                  = 3306
-  protocol                 = "tcp"
-  source_security_group_id = aws_security_group.sg.id
-}
+# resource "aws_security_group_rule" "rds_ingress_rule" {
+#   security_group_id        = aws_security_group.rds_sg.id
+#   type                     = "ingress"
+#   from_port                = 3306
+#   to_port                  = 3306
+#   protocol                 = "tcp"
+#   source_security_group_id = aws_security_group.sg.id
+# }
 
 # Outputting the RDS endpoint and port
 output "rds_endpoint" {
