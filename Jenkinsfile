@@ -1,23 +1,3 @@
-def djangoSecretKey = credentials("DJANGO_SECRET_KEY")
-def dbName = "postgres"
-def dbUser = "postgres"
-def dbPassword = credentials("DB_PASSWORD")
-def dbPort = 5432
-def allowedHosts = credentials("ALLOWED_HOSTS")
-
-
-def envFilePath = "temp_env.list"
-def envFileContent = """
-    DJANGO_SECRET_KEY=$djangoSecretKey\n
-    DB_NAME=$dbName\n
-    DB_USER=$dbUser\n
-    DB_PASSWORD=$dbPassword\n
-    DB_PORT=$dbPort\n
-    POSTGRES_DB=$dbName\n
-    POSTGRES_USER=$dbUser\n
-    POSTGRES_PASSWORD=$dbPassword\n
-    ALLOWED_HOSTS=$allowedHosts
-"""
 pipeline{
     agent any
     triggers {
@@ -25,8 +5,7 @@ pipeline{
     }
     environment{
         DOCKERHUB_CREDENTIAL = credentials("DOCKER_ID")
-        TF_VAR_db_user = 'postgres'
-        TF_VAR_db_password = credentials("DB_PASSWORD")
+        AWS_REGION = 'us-east-1'
     }
     stages{
         stage("Run Application Test"){
@@ -48,18 +27,10 @@ pipeline{
             }
             steps{
                 script {
-                    writeFile file: envFilePath, text: envFileContent
-                    
-                    // sh "cat temp_env.list"
-                    // sh "docker build -t achebeh/test ."
-                    // sh "docker image push achebeh/test "
 
-                    // sh "docker compose --env-file temp_env.list up"
-
-                    // sh "rm ${envFilePath}"
-
+                    sh "docker build -t achebeh/conduit-app ."
+                    sh "docker image push achebeh/conduit-app "
                 }
-                // sh 'docker compose up -d'
             }
 
         }
@@ -86,10 +57,8 @@ pipeline{
                         accessKeyVariable: "AWS_ACCESS_KEY_ID",
                         secretKeyVariable: "AWS_SECRET_ACCESS_KEY"
                     ]]){
-                        sh 'terraform plan -out tfplan.binary'
-                        
-                        archiveArtifacts artifacts: 'tfplan.binary'
-                        
+                        sh 'terraform plan -out tfplan.binary' 
+                        archiveArtifacts artifacts: 'tfplan.binary' 
                     } 
                 }
             }
@@ -112,8 +81,7 @@ pipeline{
                     sh 'echo "This is the financial check job"'
                     copyArtifacts filter: 'plan.json', fingerprintArtifacts: true, projectName: 'test', selector: specific ('${BUILD_NUMBER}')     
                     sh 'infracost breakdown --path . --format json --out-file infracost.json'
-                    archiveArtifacts artifacts: 'infracost.json'
-                    
+                    archiveArtifacts artifacts: 'infracost.json'  
                 } 
             }
         }
@@ -157,6 +125,38 @@ pipeline{
                 }    
             }
         }
+        stage("Deploy Application to EKS cluster") {
+            environment {
+                DB_NAME = credentials("DB_NAME")
+                clusterName = "group7-eks-cluster"
+                DJANGO_SECRET_KEY = credentials("DJANGO_SECRET_KEY")
+                DB_USER = credentials("DB_USER")
+                DB_PASSWORD = credentials("DB_PASSWORD")
+            }
+            steps {
+                    dir('./k8s') {
+                        withCredentials([[
+                        $class: 'AmazonWebServicesCredentialsBinding',
+                        credentialsId: "AWS_ID",
+                        accessKeyVariable: "AWS_ACCESS_KEY_ID",
+                        secretKeyVariable: "AWS_SECRET_ACCESS_KEY"
+                    ]]){
+                        script {
+                            try {
+                                sh 'aws eks update-kubeconfig --name ${clusterName} --region "us-east-1"'
+                                sh 'kubectl apply -f postgres.yaml'
+                                sh 'kubectl apply -f conduit-app.yaml'
+                            }
+                            catch(error){
+                                sh 'kubectl apply -f postgres.yaml'
+                                sh 'kubectl apply -f conduit-app.yaml'
+                            }
+
+                       }
+                    }
+                }
+            }
+        }
         stage("Check for Destroy Infrastructure") {
             steps {
                 input "Proceed with the Terraform Destroy Stage?"
@@ -171,8 +171,25 @@ pipeline{
                         accessKeyVariable: "AWS_ACCESS_KEY_ID",
                         secretKeyVariable: "AWS_SECRET_ACCESS_KEY"
                     ]]){
-                        sh 'terraform destroy -auto-approve'
-                    } 
+                        script {
+                            def elb_name = sh (
+                                script: 'aws elb describe-load-balancers --query "LoadBalancerDescriptions[].LoadBalancerName" --region $AWS_REGION --output text',
+                                returnStdout: true
+                                ).trim()
+                            try {
+                                def awsCommand = "aws elb delete-load-balancer --load-balancer-name ${elb_name}"
+                                sh awsCommand
+                            }
+                            catch(error){
+                                echo "No loadbalancer to delete."
+                            }
+                            sh 'kubectl delete all --all'
+                            sh 'terraform init -upgrade'
+                            sh 'terraform destroy -auto-approve'
+
+                        }                   
+                    }
+                    
                 }    
             }
 
