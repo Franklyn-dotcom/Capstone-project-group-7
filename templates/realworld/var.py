@@ -1,0 +1,6 @@
+MYSQL_DATABASE = 'dabatabse'
+MYSQL_USER = 'database_user'
+MYSQL_PASSWORD = 'user_password'
+MYSQL_PORT = '3306'
+MYSQL_HOST = 'database_container_name'
+MYSQL_ROOT_PASSWORD = 'root_password'
