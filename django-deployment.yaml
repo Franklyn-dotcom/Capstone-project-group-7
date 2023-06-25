@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: django-app
+  labels:
+    app: django-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django-app
+  template:
+    metadata:
+      name: django-app
+      labels:
+        app: django-app
+    spec:
+      containers:
+      - name: django-app
+        image: steveric/conduit4
+        resources:
+           limits:
+             memory: "1Gi"
+             cpu: 2
+        env:
+            - name: DJANGO_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql
+                  key: DJANGO_SECRET_KEY
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql
+                  key: db_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                   name: postgresql
+                   key: db_passwd
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql
+                  key: db_name
+            - name: ALLOWED_HOSTS
+              value: "*"
+            - name: DB_HOST
+              value: postgres-service
+        ports:
+           - containerPort: 8000
+        volumeMounts:
+            - name: django-volume
+              mountPath: /app
+      volumes:
+        - name: django-volume
+          persistentVolumeClaim:
+            claimName: django-volume
+  
+---
+#django application service 
+apiVersion: v1
+kind: Service
+metadata:
+  name: django-service
+spec:
+  selector:
+    app: django-app
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  type: NodePort

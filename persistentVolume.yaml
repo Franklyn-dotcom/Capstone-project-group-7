@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv
+spec:
+  storageClassName: standard
+  capacity: 
+    storage: 400Mi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /app
+---
+#persistent volume claim for django app
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: django-volume
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 400Mi
+  storageClassName: standard
+  volumeName: pv
+---
+#persistent volume for postgresql
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: postgresql-pv
+spec:
+  storageClassName: standard
+  capacity: 
+    storage: 400Mi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /var/lib/postgresql2/data
+
+---
+#persistent volume claim for mysql
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgresql-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+     requests:
+       storage: 400Mi
+  storageClassName: standard
+  volumeName: postgresql-pv
