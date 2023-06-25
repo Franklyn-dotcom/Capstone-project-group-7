@@ -1,8 +1,8 @@
 version: '3.7'
 services:
-  postgres_db:
+  db:
     image: postgres:14.6
-    container_name: postgres
+    container_name: postgres1
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
@@ -10,7 +10,6 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./.env:/etc/environment
       - pgdata:/var/lib/postgresql/data
     restart: always
     healthcheck:
@@ -29,23 +28,22 @@ services:
     volumes:
       - .:/app
     ports:
-      - "8000:8000"
+      - 8000:8000
     environment:
-      - DB_HOST=postgres_db
+      - DB_HOST=db
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
-      - DB_PASS=${DB_PASSWORD}
+      - DB_PASSWORD=${DB_PASSWORD}
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
     depends_on:
-      postgres_db:
+      db:
         condition: service_healthy
     networks:
       - conduit
 
 volumes:
   pgdata:
-    driver: local
     
 networks:
   conduit:
