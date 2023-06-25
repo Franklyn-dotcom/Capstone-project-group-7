@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: "postgres-pv"
+  labels:
+    type: "local"
+spec:
+  storageClassName: cloud
+  capacity:
+    storage: 1Gi
+  accessMode:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/postgres-pv
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pvc
+  namespace: default
+spec:
+  storageClassName: cloud
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  volumeName: postgres-pv

@@ -7,7 +7,7 @@ variable "subnet_cidr_block" {
 }
 
 variable "avail_zone" {
-  default = "eu-west-2a"
+  default = "us-east-1a"
 }
 
 variable "instance_type" {

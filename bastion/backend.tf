@@ -1,7 +1,7 @@
 terraform {
   backend "s3" {
     bucket = "group7-bastion"
-    region = "eu-west-2"
+    region = "eu-west-1"
     key    = "bastion/terraform.tfstate"
   }
 }
