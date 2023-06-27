@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: service-monitor-django-service
+  labels:
+    release: prometheus
+    app: prometheus
+spec:
+  jobLabel: name
+  endpoints:
+    - interval: 30s
+      port: 8000
+      path: /metrics
+  selector:
+    matchLabels:
+      app: condult
