@@ -29,8 +29,7 @@ spec:
         - name: DB_USER
           value: $(DB_USER)
         - name: DB_PASS
-          value: $(t
-          )
+          value: $(DB_PASSWORD)
         - name: ALLOWED_HOSTS
           value: "*"
         - name: DB_HOST
@@ -48,5 +47,5 @@ spec:
     app: conduit-app
   ports:
     - protocol: TCP
-      port: 8000
+      port: 80
       targetPort: 8000

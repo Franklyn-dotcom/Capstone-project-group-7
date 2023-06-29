@@ -145,3 +145,11 @@ AUTH_USER_MODEL = "accounts.User"
 
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/"
+
+CSRF_TRUSTED_ORIGINS = []
+CSRF_TRUSTED_ORIGINS.extend(
+    filter(None, os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(','))
+)
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_SECURE = False
+SECURE_SSL_REDIRECT = False
