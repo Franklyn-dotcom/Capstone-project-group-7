@@ -1,0 +1,14 @@
+__pycache__
+venv
+*.pyc
+*.sqlite3
+
+.env
+terraform/.terraform/providers/registry.terraform.io/hashicorp/tls/4.0.4/linux_amd64/terraform-provider-tls_v4.0.4_x5
+terraform/.terraform/providers/registry.terraform.io/hashicorp/local/2.4.0/linux_amd64/terraform-provider-local_v2.4.0_x5
+terraform/.terraform/terraform.tfstate
+terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/4.67.0/linux_amd64/terraform-provider-aws_v4.67.0_x5
+terraform/.terraform.lock.hcl
+terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/5.3.0/linux_amd64/terraform-provider-aws_v5.3.0_x5
+terraform/errored.tfstate
+RAEDME_OLD.md

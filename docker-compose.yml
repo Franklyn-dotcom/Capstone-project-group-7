@@ -1,21 +1,22 @@
 version: '3.7'
 services:
-  mysql_db:
-    image: mysql:8.0
-    container_name: mysql_db
+  db:
+    image: postgres:14.6
+    container_name: postgres1
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_PORT: ${MYSQL_PORT}
-      MYSQL_HOST: ${MYSQL_HOST}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     ports:
-      - "3306:3306"
+      - 5432:5432
     volumes:
-      - ./.env:/etc/environment
-      - mysql_db:/var/lib/mysql
-    restart: unless-stopped
+      - pgdata:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 10s
+      timeout: 45s
+      retries: 10
     networks:
       - conduit
 
@@ -24,16 +25,26 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: conduit
+    volumes:
+      - .:/app
     ports:
-      - "8000:8000"
+      - 8000:8000
+    environment:
+      - DB_HOST=db
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - conduit
 
 volumes:
-    mysql_db:
-      driver: local
+  pgdata:
+    
 networks:
   conduit:
     driver: bridge
