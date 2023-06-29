@@ -8,7 +8,7 @@ This repository contains files used to deploy the Meduim.com clone called Condui
 
 ## Application Architecture
 
-[conduit-architecture](https://github.com/Franklyn-dotcom/Capstone-project-group-7/blob/feature/test2/images/conduit_architecture.jpg)
+(conduit-architecture)[https://github.com/Franklyn-dotcom/]Capstone-project-group-7/blob/feature/test2/images/conduit_architecture.jpg)
 
 ## Application Deployment
 
