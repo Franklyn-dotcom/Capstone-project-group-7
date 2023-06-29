@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  labels:
+    app: django-postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django-postgres
+  template:
+    metadata:
+      name: django-postgres
+      labels:
+        app: django-postgres
+    spec:
+      containers:
+        - name: django-postgres
+          image: postgres
+          resources:
+           limits:
+             memory: "1Gi"
+             cpu: 1
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                 secretKeyRef:
+                    name: postgresql
+                    key: db_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                   name: postgresql
+                   key: db_passwd
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: postgresql
+                  key: db_name
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: postgres-storage
+              mountPath: /var/lib/postgresql2/data
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: postgresql-pvc
+      
+---
+#postgresql database service
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+spec: 
+  selector:
+    app: django-postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+
