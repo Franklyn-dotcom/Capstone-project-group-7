@@ -30,8 +30,6 @@ The pipeline is triggered by a push to the main branch of this repository. The p
 
 ## Active Maintainers
 
-> Everyone is part of the FinOps Team.
-
 - [Abubakar Mohammed](https://github.com/Mobakar) [Config Management Team] [![Linkedin Badge](https://img.shields.io/badge/-abubakar-blue?style=for-the-badge&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/adedolapo-o-968841b6)](<https://www.linkedin.com/in/abubakar-mohammed-86577b1a2/>)
 - [Achebe Okechukwu Peter](https://github.com/Okeybukks) (Team Lead) [CI/CD Team] [![Linkedin Badge](https://img.shields.io/badge/-achebe-blue?style=for-the-badge&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/adedolapo-o-968841b6)](<https://www.linkedin.com/in/achebe-okechukwu-82a9479a/>)
 - [Kinger Stephen Eric](https://github.com/Steveric1) [Config Management Team] [![Linkedin Badge](https://img.shields.io/badge/-stephen-blue?style=for-the-badge&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/adedolapo-o-968841b6)](<https://www.linkedin.com/in/steve-eric/>)
@@ -40,3 +38,5 @@ The pipeline is triggered by a push to the main branch of this repository. The p
 - [Okeke Isaac](https://github.com/isaackees) [S.R.E. Team] [![Linkedin Badge](https://img.shields.io/badge/-isaac-blue?style=for-the-badge&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/adedolapo-o-968841b6)](<https://www.linkedin.com/in/isaacokeke/>)
 - [Victor Onyekwere](https://github.com/dkckac8989) [CI/CD Team] [![Linkedin Badge](https://img.shields.io/badge/-victor-blue?style=for-the-badge&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/adedolapo-o-968841b6)](<https://www.linkedin.com/in/victor-onyekwere-31a8a2270/>)
 - [Adedolapo Olutuyo](https://github.com/tuyojr) [Infrastructure Team] [![Linkedin Badge](https://img.shields.io/badge/-tuyo-blue?style=for-the-badge&logo=Linkedin&logoColor=white&link=https://www.linkedin.com/in/adedolapo-o-968841b6)](<https://www.linkedin.com/in/adedolapo-o-968841b6/>)
+
+> Everyone is part of the FinOps Team.
