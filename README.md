@@ -2,6 +2,8 @@
 
 ![Altschool Africa](https://github.com/tuyojr/cloudTasks/blob/main/logos/AltSchool.svg)
 
+![realworld-dual-mode](https://github.com/gothinkster/realworld/blob/main/media/realworld-dual-mode.png)
+
 ## Conduit Real-World Application
 
 This repository contains files used to deploy the Meduim.com clone called Conduit created by [gothinkster](https://github.com/gothinkster/realworld). The implemnetation contained here is a clone of the Django, HTMX, and Alpine implementation by [@danjac](https://github.com/danjac) with some modifications to use a PostgreSQL database in our production environment instead of the dbsqlite3 used for initial development.
