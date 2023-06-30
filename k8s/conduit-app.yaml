@@ -34,6 +34,8 @@ spec:
           value: "*"
         - name: DB_HOST
           value: postgres-service
+        - name: CSRF_TRUSTED_ORIGINS
+          value: $(CSRF_TRUSTED_ORIGINS)
         ports:
         - containerPort: 8000
 ---
