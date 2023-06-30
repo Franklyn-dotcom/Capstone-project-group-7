@@ -8,7 +8,7 @@ spec:
   storageClassName: cloud
   capacity:
     storage: 1Gi
-  accessMode:
+  accessModes:
     - ReadWriteOnce
   hostPath:
     path: /data/postgres-pv
