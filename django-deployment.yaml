@@ -63,7 +63,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: django-service
-  app: condult
+  labels:
+    app: condult
 spec:
   selector:
     app: django-app
