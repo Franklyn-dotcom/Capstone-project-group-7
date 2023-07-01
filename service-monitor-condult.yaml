@@ -9,7 +9,7 @@ spec:
   jobLabel: name
   endpoints:
     - interval: 30s
-      port: 8000
+      port: "8000"
       path: /metrics
   selector:
     matchLabels:
