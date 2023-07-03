@@ -9,9 +9,9 @@ spec:
     - name: alerts-rules
       rules:
         - alert: down
-          expr: kube_pod_container_status_running{container="django-app"} == 1
-          for: 1m
+          expr: up{endpoint="metrics"} == 0
+          for: 0m
           labels:
             severity: critical
           annotations:
-            message: "Prometheus target down on {{.Labels.instance}}"
+            message: "Prometheus target down on {{.Labels.endpoint}}"

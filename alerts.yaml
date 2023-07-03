@@ -17,7 +17,7 @@ spec:
         - url: "http://example.com"
     - name: "slack"
       slackConfigs:
-        - api_url: https://hooks.slack.com/services/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
+        - api_url: https://hooks.slack.com/services/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
           channel: '#alert'
           title: 'alert found'
           sendResolved: true
