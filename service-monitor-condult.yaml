@@ -6,11 +6,13 @@ metadata:
     release: prometheus
     app: prometheus
 spec:
-  jobLabel: name
   endpoints:
-    - interval: 30s
-      port: 8000
-      path: /metrics
+    - interval: 15s
+      port: metrics
+      scrapeTimeout: 14s
+#  namespaceSelector:
+#    matchNames:
+#      - production
   selector:
     matchLabels:
-      app: condult
+      app.kubernetes.io/part-of: condult

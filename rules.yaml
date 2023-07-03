@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: my-rules
+  labels:
+    release: prometheus
+spec:
+  groups:
+    - name: alerts-rules
+      rules:
+        - alert: down
+          expr: up{endpoint="metrics"} == 0
+          for: 0m
+          labels:
+            severity: critical
+          annotations:
+            message: "Prometheus target down on {{.Labels.endpoint}}"
