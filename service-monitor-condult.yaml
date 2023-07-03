@@ -8,9 +8,9 @@ metadata:
 spec:
   jobLabel: name
   endpoints:
-    - interval: 30s
-      port: "8000"
-      path: /metrics
+    - interval: 15s
+      port: metrics
+      scrapeTimeout: 14s
   selector:
     matchLabels:
-      app: condult
+      app.kubernetes.io/part-of: condult

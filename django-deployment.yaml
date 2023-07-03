@@ -63,8 +63,11 @@ apiVersion: v1
 kind: Service
 metadata:
   name: django-service
+  annotations:
+    prometheus.io/port: "metrics"
+    prometheus.io/scrape: "true"
   labels:
-    app: condult
+    app.kubernetes.io/part-of: condult
 spec:
   selector:
     app: django-app
@@ -72,4 +75,5 @@ spec:
     - protocol: TCP
       port: 8000
       targetPort: 8000
+      name: "metrics"
   type: NodePort
