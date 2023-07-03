@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: my-rules
+  labels:
+    release: prometheus
+spec:
+  groups:
+    - name: alerts-rules
+      rules:
+        - alert: down
+          expr: kube_pod_container_status_running{container="django-app"} == 1
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            message: "Prometheus target down on {{.Labels.instance}}"

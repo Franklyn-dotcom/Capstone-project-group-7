@@ -1,0 +1,23 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: alert-config
+  labels:
+    resource: prometheus
+spec:
+  route:
+    groupBy: ["severity"]
+    groupWait: 20s
+    groupInterval: 4m
+    repeatInterval: 12h
+    receiver: "slack"
+  receivers:
+    - name: "webhook"
+      webhookConfigs:
+        - url: "http://example.com"
+    - name: "slack"
+      slackConfigs:
+        - api_url: https://hooks.slack.com/services/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
+          channel: '#alert'
+          title: 'alert found'
+          sendResolved: true
