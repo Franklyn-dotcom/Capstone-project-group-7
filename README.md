@@ -5,6 +5,7 @@
 <p>All monitoring is performed by prometheus using a helm chart called <b>prometheus-community/kube-prometheus-stack</b>.
 Helm is a package manager for kubernetes. The helm chart will automatically install all packages and configurations you need to monitor your application.
 ### First we are going to install helm: 
+
 ```
 sudo curl -fsSL -o get_helm.sh https://raw.githubcontent.com/helm/helm/main/scripts/get-helm-3
 
