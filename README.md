@@ -66,5 +66,7 @@ The grafana server will be exposed on port <b> 80 </b>.
 Created a dashboard in the grafana UI to view my data and save the dashboard
 
 <img src="grafana-4.png">
+
 <img src="granfana-2.png">
+
 <img src="granfana-3.png"> 
