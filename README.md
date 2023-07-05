@@ -7,7 +7,9 @@ Helm is a package manager for kubernetes. The helm chart will automatically inst
 ### First we are going to install helm: 
 ```
 sudo curl -fsSL -o get_helm.sh https://raw.githubcontent.com/helm/helm/main/scripts/get-helm-3
+
 sudo chmod 700 get_helm.sh
+
 ./get_helm.sh
 ```
 
