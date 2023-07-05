@@ -20,7 +20,7 @@ helm repo add prometheus-community https://prometheus-community.github.io/helm-c
 helm repo update
 
 helm install prometheus prometheus-community/kube-prometheus-stack
-```
+
 
 <b> N.B you can use any release name of your choice when installing the chart </b>
 
