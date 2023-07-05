@@ -11,11 +11,9 @@ sudo curl -fsSL -o get_helm.sh https://raw.githubcontent.com/helm/helm/main/scri
 sudo chmod 700 get_helm.sh
 
 ./get_helm.sh
-
 ```
 
 #### Adding prometheus repo using helm, updating the repo and installing the chart
-
 ```
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 
@@ -23,6 +21,7 @@ helm repo update
 
 helm install prometheus prometheus-community/kube-prometheus-stack
 ```
+
 <b> N.B you can use any release name of your choice when installing the chart </b>
 
 After installation, run <b> kubectl get all </b> to see all the pending/running state of the pods, deployment, statefulSet, services, etc.
