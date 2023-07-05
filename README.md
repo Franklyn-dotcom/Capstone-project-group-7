@@ -11,7 +11,7 @@ sudo curl -fsSL -o get_helm.sh https://raw.githubcontent.com/helm/helm/main/scri
 sudo chmod 700 get_helm.sh
 
 ./get_helm.sh
-```
+
 
 #### Adding prometheus repo using helm, updating the repo and installing the chart
 ```
