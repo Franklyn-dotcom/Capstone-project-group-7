@@ -52,3 +52,19 @@ To view if the service of your application has been scraped navigate to the stat
 <img src="time-series.png">
 
 </p>
+
+
+<p></p>
+
+#### Visualization
+
+To view the data using grafana, edit the service type of the grafana service to a load balancer or node port, save it in a new file and apply the change.
+
+The grafana server will be exposed on port <b> 80 </b>.
+
+#### Creating a dashboard
+Created a dashboard in the grafana UI to view my data and save the dashboard
+
+<img src="grafana-4.png">
+<img src="granfana-2.png">
+<img src="granfana-3.png"> 
